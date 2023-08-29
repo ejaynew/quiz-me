@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import Quiz from "./components/Quiz";
+import { Layout } from "antd";
 
 function App() {
+  const categories = ["4", "5", "6"].map((key) => ({
+    key,
+    label: `nav ${key}`,
+  }));
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        <Header />
+        <Layout>
+          <Navbar categories={categories} />
+          <Layout style={{ padding: "0 24px 24px" }}>
+            <Quiz />
+          </Layout>
+        </Layout>
+      </Layout>
+      <Footer style={{ padding: "10px", alignText: "right" }} />
     </div>
   );
 }
