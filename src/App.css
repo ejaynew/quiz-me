@@ -14,13 +14,6 @@
 .footer {
   background-color: whitesmoke;
   padding: 10px;
-  position: absolute;
-  bottom: 0;
-  width: 98%;
-}
-
-.breadcrumbs {
-  padding: 10px;
 }
 
 .quiz-body {
@@ -30,4 +23,26 @@
 
 .quiz-container {
   min-height: 200px;
+  display: table-cell;
+}
+
+.sidebar {
+  text-align: left;
+  margin: 10px;
+  display: table-cell;
+  position: relative;
+  width: 33%;
+}
+
+.sidebar-menu {
+  max-height: 40em;
+  overflow-y: auto;
+}
+
+.sidebar-title {
+  text-align: center;
+}
+
+.topic-label {
+  color: blue;
 }

@@ -6,20 +6,33 @@ const quizSlice = createSlice({
     category: null,
     questions: [],
     activeQuestion: null,
+    loading: false,
+    error: null,
   },
   reducers: {
     setCategory: (state, action) => {
       state.category = action.payload;
     },
-    setQuestions: (state, action) => {
+    fetchQuestionsPending: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchQuestionsSuccess: (state, action) => {
+      state.loading = false;
       state.questions = action.payload;
     },
-    setActiveQuestion: (state, action) => {
+    fetchQuestionsFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    offsetActiveQuestion: (state, action) => {
       state.activeQuestion = action.payload;
     },
   },
 });
 
-export const { setCategory, setQuestions, setActiveQuestion } = quizSlice.actions;
+export const { setCategory, fetchQuestionsPending, fetchQuestionsSuccess, fetchQuestionsFailure, offsetActiveQuestion } = quizSlice.actions;
+
+
 
 export default quizSlice.reducer;

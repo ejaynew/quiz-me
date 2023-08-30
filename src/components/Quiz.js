@@ -1,20 +1,14 @@
 import React from "react";
-import { Breadcrumb } from "antd";
+import { useSelector } from "react-redux";
 
 const Quiz = () => {
+  const topic = useSelector((state) => state.categories.selectedCategory);
   return (
     <div className="quiz-container">
-      <div className="breadcrumbs">
-        <Breadcrumb>
-          <Breadcrumb.Item>About</Breadcrumb.Item>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Quiz</Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-      <div className="quiz-body">
-
-      </div>
-      <p>This is the quiz!</p>
+      <p>
+        Current quiz topic: <span className="topic-label">{topic}</span>
+      </p>
+      <div className="quiz-body"></div>
     </div>
   );
 };
