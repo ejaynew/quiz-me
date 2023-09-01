@@ -1,42 +1,63 @@
 .App {
   text-align: center;
+  overflow-x: hidden;
 }
 
 .App-link {
   color: #61dafb;
 }
 
+.header-container {
+  background-color: papayawhip;
+  color: peru;
+  min-height: 10vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column; /* Make the children stack vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+}
+
 .header {
-  background-color: purple;
-  color: yellow;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.subheader {
+  font-size: 1rem; 
+  margin: 0;
 }
 
 .footer {
   background-color: whitesmoke;
-  padding: 10px;
+  padding: 5px;
 }
 
 .quiz-body {
   background-color: lightpink;
-  min-height: 20em;
+  min-height: 20vh;
 }
 
 .quiz-container {
-  min-height: 200px;
+  min-height: 30vh;
   display: table-cell;
+  width: 75vw;
+  padding: 5px;
 }
 
 .sidebar {
-  text-align: left;
+  text-align: center;
   margin: 10px;
   display: table-cell;
   position: relative;
-  width: 33%;
+  width: 25vw;
+  background-color: #ffd28a;
 }
 
 .sidebar-menu {
-  max-height: 40em;
+  max-height: 75vh;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sidebar-title {
@@ -45,4 +66,32 @@
 
 .topic-label {
   color: blue;
+}
+
+.nav-btn {
+  padding: 8px;
+  background-color: papayawhip;
+  border: 1px solid orange;
+  margin: 1px 5px 1px 5px;
+  width: 85%;
+}
+
+.nav-btn:hover {
+  cursor: pointer;
+}
+
+.nav-btn.selected {
+  background-color: #ffd28a;
+}
+
+.quiz-btn {
+  padding: 8px;
+  border: 1px solid pink;
+  margin: 1px 5px 1px 5px;
+  width: 30%;
+  background-color: greenyellow;
+}
+
+.quiz-btn:hover {
+  cursor: pointer;
 }

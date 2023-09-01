@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCategory } from "../redux/slices/categoriesSlice";
-import Nav from 'react-bootstrap/Nav';
 
 const Navbar = () => {
   const categories = useSelector((state) => state.categories.categories);
@@ -18,37 +17,41 @@ const Navbar = () => {
   }
 
   const categoryItems = categories.map((category) =>
-    getItem(category.key, category.name)
+    getItem(category.id, category.name)
   );
 
   const handleCategoryClick = (e) => {
-    console.log(e.target.value);
-    dispatch(selectCategory(e.target.value)); // Dispatch action to update selected category
+    const categoryItem = categoryItems.filter(
+      (c) => c.label === e.target.value
+    );
+    dispatch(selectCategory(categoryItem[0])); // Dispatch action to update selected category
   };
 
   return (
     <div className="sidebar">
       <h3 className="sidebar-title">Quiz Topics</h3>
-      <Nav
-        className="sidebar-menu"
-        mode="inline"
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        style={{ height: "100%", borderRight: 0 }}
-      >
-        {categoryItems.map((category) => (
-          <Nav.Item>
-            <Nav.Link
-              href={handleCategoryClick}
-              className={category.key === selectedCategory ? "selected" : ""}
-              key={category.key}
-              value={category.label}
-            >
-              {category.label}
-            </Nav.Link>
-          </Nav.Item>
-        ))}
-      </Nav>
+      <nav className="sidebar-menu" style={{ height: "100%", borderRight: 0 }}>
+        {categoryItems.map(
+          (
+            category // Each category gets a button in the nav menu
+          ) => (
+            <div className="nav-item">
+              <button
+                onClick={handleCategoryClick}
+                className={
+                  category.key === selectedCategory.key
+                    ? "nav-btn selected"
+                    : "nav-btn"
+                }
+                key={category.key}
+                value={category.label}
+              >
+                {category.label}
+              </button>
+            </div>
+          )
+        )}
+      </nav>
     </div>
   );
 };
