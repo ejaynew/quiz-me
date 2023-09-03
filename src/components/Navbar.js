@@ -35,15 +35,14 @@ const Navbar = () => {
           (
             category // Each category gets a button in the nav menu
           ) => (
-            <div className="nav-item">
+            <div className="nav-item" key={category.key}>
               <button
                 onClick={handleCategoryClick}
                 className={
-                  category.key === selectedCategory.key
+                  selectedCategory && category.key === selectedCategory.key
                     ? "nav-btn selected"
                     : "nav-btn"
                 }
-                key={category.key}
                 value={category.label}
               >
                 {category.label}

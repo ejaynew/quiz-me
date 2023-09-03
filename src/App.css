@@ -29,7 +29,7 @@
 }
 
 .footer {
-  background-color: whitesmoke;
+  background-color: papayawhip;
   padding: 5px;
 }
 
@@ -65,7 +65,8 @@
 }
 
 .topic-label {
-  color: blue;
+  color: dodgerblue;
+  font-weight: bold;
 }
 
 .nav-btn {
@@ -81,7 +82,9 @@
 }
 
 .nav-btn.selected {
-  background-color: #ffd28a;
+  background-color: dodgerblue;
+  color: white;
+  font-weight: bold;
 }
 
 .quiz-btn {
@@ -89,9 +92,21 @@
   border: 1px solid pink;
   margin: 1px 5px 1px 5px;
   width: 30%;
-  background-color: greenyellow;
+  background-color: mediumseagreen;
+  color: white;
+  font-weight: bold;
 }
 
 .quiz-btn:hover {
   cursor: pointer;
+}
+
+.questions-container {
+  font-weight: bold;
+  color: orange;
+  background-color: purple;
+}
+
+.question {
+  padding: 5px;
 }

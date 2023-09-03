@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchQuestions } from "../../opentdb/opentdb";
 
 const quizSlice = createSlice({
   name: "quiz",
@@ -25,14 +26,19 @@ const quizSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    offsetActiveQuestion: (state, action) => {
-      state.activeQuestion = action.payload;
-    },
   },
 });
 
-export const { setCategory, fetchQuestionsPending, fetchQuestionsSuccess, fetchQuestionsFailure, offsetActiveQuestion } = quizSlice.actions;
+export const { setCategory, fetchQuestionsPending, fetchQuestionsSuccess, fetchQuestionsFailure } = quizSlice.actions;
 
-
+export const fetchNewQuestions = (category, amount) => async (dispatch) => {
+  dispatch(fetchQuestionsPending());
+  try {
+    const questions = await fetchQuestions(category, amount=10);
+    dispatch(fetchQuestionsSuccess(questions));
+  } catch (error) {
+    dispatch(fetchQuestionsFailure(error));
+  }
+};
 
 export default quizSlice.reducer;
