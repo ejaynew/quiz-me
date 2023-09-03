@@ -1,6 +1,6 @@
-const he = require('he');
+const he = require("he");
 function decodeHtmlEntities(input) {
-    return he.decode(input);
-  }
-  
-  export { decodeHtmlEntities };
+  return he.decode(input);
+}
+
+export { decodeHtmlEntities };

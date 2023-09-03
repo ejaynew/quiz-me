@@ -1,7 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchNewQuestions } from "../redux/slices/quizSlice";
-import { decodeHtmlEntities } from "../util/htmlEntities";
+import {
+  fetchNewQuestions,
+  setActiveQuestion,
+  clearSelectedAnswer,
+} from "../redux/slices/quizSlice";
+import { ActiveQuestion } from "../components/ActiveQuestion";
 
 const Quiz = () => {
   const selectedCategory = useSelector(
@@ -10,12 +14,28 @@ const Quiz = () => {
   const error = useSelector((state) => state.quiz.error);
   const questions = useSelector((state) => state.quiz.questions);
   const isLoading = useSelector((state) => state.quiz.loading);
+  const activeQuestionKey = useSelector(
+    (state) => state.quiz.activeQuestionKey
+  );
 
   const dispatch = useDispatch();
   const handleStartClick = () => {
+    dispatch(clearSelectedAnswer());
     dispatch(fetchNewQuestions(selectedCategory));
   };
-
+  const handleBackClick = () => {
+    dispatch(clearSelectedAnswer());
+    dispatch(setActiveQuestion(Math.max(activeQuestionKey - 1, 0)));
+  };
+  const handleNextClick = () => {
+    dispatch(clearSelectedAnswer());
+    dispatch(
+      setActiveQuestion(Math.min(activeQuestionKey + 1, questions.length - 1))
+    );
+  };
+  const handleClear = () => {
+    dispatch(clearSelectedAnswer());
+  };
   return (
     <div className="quiz-container">
       <p>
@@ -36,17 +56,17 @@ const Quiz = () => {
         </div>
         <div className="questions-container">
           {questions.length ? (
-            questions.map((question) => (
-              <div className="question" key={question.id}>
-                <p>{decodeHtmlEntities(question.question)}</p>
-              </div>
-            ))
+            <ActiveQuestion />
           ) : (
             <div className="quiz-error">
-              {console.log(error)}
               <p>{error}</p>
             </div>
           )}
+        </div>
+        <div className="controls">
+          <button onClick={handleBackClick}>Back</button>
+          <button onClick={handleClear}>Clear current answer</button>
+          <button onClick={handleNextClick}>Next</button>
         </div>
       </div>
     </div>

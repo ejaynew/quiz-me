@@ -6,9 +6,11 @@ const quizSlice = createSlice({
   initialState: {
     category: null,
     questions: [],
-    activeQuestion: null,
+    activeQuestionKey: null,
     loading: false,
     error: null,
+    selectedAnswer: null,
+    isAnswerCorrect: null,
   },
   reducers: {
     setCategory: (state, action) => {
@@ -21,10 +23,22 @@ const quizSlice = createSlice({
     fetchQuestionsSuccess: (state, action) => {
       state.loading = false;
       state.questions = action.payload;
+      state.activeQuestionKey = 0;
     },
     fetchQuestionsFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    setActiveQuestion: (state, action) => {
+      state.activeQuestionKey = action.payload;
+    },
+    selectAnswer: (state, action) => {
+      state.selectedAnswer = action.payload.answer;
+      state.isAnswerCorrect = action.payload.isCorrect;
+    },
+    clearSelectedAnswer: (state) => {
+      state.selectedAnswer = null;
+      state.isAnswerCorrect = null;
     },
   },
 });
@@ -34,6 +48,9 @@ export const {
   fetchQuestionsPending,
   fetchQuestionsSuccess,
   fetchQuestionsFailure,
+  setActiveQuestion,
+  selectAnswer,
+  clearSelectedAnswer,
 } = quizSlice.actions;
 
 export const fetchNewQuestions = (category, amount) => async (dispatch) => {
