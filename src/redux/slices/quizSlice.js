@@ -29,12 +29,21 @@ const quizSlice = createSlice({
   },
 });
 
-export const { setCategory, fetchQuestionsPending, fetchQuestionsSuccess, fetchQuestionsFailure } = quizSlice.actions;
+export const {
+  setCategory,
+  fetchQuestionsPending,
+  fetchQuestionsSuccess,
+  fetchQuestionsFailure,
+} = quizSlice.actions;
 
 export const fetchNewQuestions = (category, amount) => async (dispatch) => {
+  if (!category) {
+    dispatch(fetchQuestionsFailure("Please select a category first!"));
+    return;
+  }
   dispatch(fetchQuestionsPending());
   try {
-    const questions = await fetchQuestions(category, amount=10);
+    const questions = await fetchQuestions(category, (amount = 10));
     dispatch(fetchQuestionsSuccess(questions));
   } catch (error) {
     dispatch(fetchQuestionsFailure(error));
