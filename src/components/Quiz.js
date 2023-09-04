@@ -67,9 +67,9 @@ const Quiz = () => {
           )}
         </div>
         <div className="controls">
-          <div className="controls-progress">
+          {questions.length>0 && <div className="controls-progress">
             <span>question {activeQuestionKey+1}/{questions.length}</span>
-          </div>
+          </div>}
           <div className="controls-btns">
             <button
               onClick={handleBackClick}
