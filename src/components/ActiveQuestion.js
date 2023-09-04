@@ -40,7 +40,17 @@ export const ActiveQuestion = () => {
             }. ${decodeHtmlEntities(option)}`}</button>
           </div>
         ))}
-        {isAnswerCorrect && <p>That's right! The correct answer is {selectedAnswer}.</p>}
+        {isAnswerCorrect && (
+          <p class="correct-message">
+            👏 That's right! The correct answer is{" "}
+            <span class="correct-answer">{decodeHtmlEntities(selectedAnswer)}</span>.
+          </p>
+        )}
+        {isAnswerCorrect===false && (
+          <p class="incorrect-message">
+            You selected <span class="incorrect-answer">{decodeHtmlEntities(selectedAnswer)}</span>, which is incorrect. Please try again.
+          </p>
+        )}
       </div>
       {console.log(activeQuestion)}
     </div>

@@ -3,19 +3,26 @@
   overflow-x: hidden;
 }
 
+body.dark-mode {
+  background-color: #222;
+  color: #fff;
+}
+
 .App-link {
   color: #61dafb;
 }
-
 .header-container {
   background-color: papayawhip;
   color: peru;
-  min-height: 10vh;
-  width: 100vw;
   display: flex;
-  flex-direction: column; /* Make the children stack vertically */
-  align-items: center; /* Center horizontally */
-  justify-content: center; /* Center vertically */
+  justify-content: space-between; /* Space items horizontally */
+  align-items: center; /* Center items vertically */
+  padding: 10px; /* Add some padding for spacing */
+}
+
+.title-container {
+  padding: 10px;
+  min-width: 80%;
 }
 
 .header {
@@ -24,17 +31,30 @@
 }
 
 .subheader {
-  font-size: 1rem; 
+  font-size: 1rem;
   margin: 0;
+}
+
+.dark-mode-btn-container {
+  display: flex;
+  align-items: center; /* Center items vertically within the dark mode container */
+  justify-content: left;
+  min-width: 10%;
+  padding-right: 20px;
+}
+
+/* Style the label and input for the dark mode toggle */
+.dark-mode-label {
+  margin-right: 8px; /* Add some space between label and input */
 }
 
 .footer {
   background-color: papayawhip;
+  color: black;
   padding: 5px;
 }
 
 .quiz-body {
-  background-color: lightpink;
   min-height: 20vh;
 }
 
@@ -58,10 +78,12 @@
   max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-bottom: 10px;
 }
 
 .sidebar-title {
   text-align: center;
+  color: black;
 }
 
 .topic-label {
@@ -74,7 +96,8 @@
   background-color: papayawhip;
   border: 1px solid orange;
   margin: 1px 5px 1px 5px;
-  width: 85%;
+  width: 80%;
+  border-radius: 8px;
 }
 
 .nav-btn:hover {
@@ -95,6 +118,7 @@
   background-color: mediumseagreen;
   color: white;
   font-weight: bold;
+  border-radius: 8px;
 }
 
 .quiz-btn:hover {
@@ -116,12 +140,20 @@
 
 .controls {
   padding: 20px;
+  border-radius: 8px;
 }
 
-.question-answers.correct {
-  background-color: mediumseagreen;
+.correct-message,
+.incorrect-message {
+  text-align: center;
 }
 
-.question-answers.incorrect {
-  background-color: red;
+.correct-answer {
+  color: dodgerblue;
+  font-weight: bold;
+}
+
+.incorrect-answer {
+  color: peru;
+  font-weight: bold;
 }

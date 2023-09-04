@@ -17,6 +17,9 @@ const Quiz = () => {
   const activeQuestionKey = useSelector(
     (state) => state.quiz.activeQuestionKey
   );
+  const isFirstQuestion = activeQuestionKey === 0;
+  const isAnswerSelected = useSelector((state) => state.quiz.selectedAnswer);
+  const isAnswerCorrect = useSelector((state) => state.quiz.isAnswerCorrect);
 
   const dispatch = useDispatch();
   const handleStartClick = () => {
@@ -64,9 +67,23 @@ const Quiz = () => {
           )}
         </div>
         <div className="controls">
-          <button onClick={handleBackClick}>Back</button>
-          <button onClick={handleClear}>Clear current answer</button>
-          <button onClick={handleNextClick}>Next</button>
+          <div className="controls-progress">
+            <span>question {activeQuestionKey+1}/{questions.length}</span>
+          </div>
+          <div className="controls-btns">
+            <button
+              onClick={handleBackClick}
+              disabled={isFirstQuestion || !questions.length}
+            >
+              Back
+            </button>
+            <button onClick={handleClear} disabled={!isAnswerSelected}>
+              Clear current answer
+            </button>
+            <button onClick={handleNextClick} disabled={!isAnswerCorrect}>
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
