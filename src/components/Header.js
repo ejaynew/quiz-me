@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setDarkMode } from "../redux/slices/quizSlice";
+import { FormControlLabel, Switch } from "@mui/material";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,16 +16,17 @@ const Header = () => {
         <p className="subheader">the app that quizzes</p>
       </div>
       <div class="dark-mode-btn-container">
-        <label for="dark-mode">dark mode: </label>
-        <input
-          type="checkbox"
-          className="dark-mode-btn"
-          onClick={handleDarkmodeClick}
-          label="dark mode"
-          name="dark mode"
-          id="darkmode"
-          for="Dark mode"
-        />
+      <FormControlLabel control={<Switch/>} label="Dark mode" onClick={handleDarkmodeClick} />
+        {/* // <label for="dark-mode">dark mode: </label>
+        // <input */}
+        {/* //   type="checkbox"
+        //   className="dark-mode-btn"
+        //   onClick={handleDarkmodeClick}
+        //   label="dark mode"
+        //   name="dark mode"
+        //   id="darkmode"
+        //   for="Dark mode"
+        // /> */}
       </div>
     </div>
   );

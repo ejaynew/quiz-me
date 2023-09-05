@@ -1,4 +1,6 @@
-function shuffle(array) {
+function shuffle(inputArray) {
+  let array = [...inputArray]; // Make a deep copy of the inputArray
+
   let currentIndex = array.length,
     randomIndex;
 

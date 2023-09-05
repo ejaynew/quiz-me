@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCategory } from "../redux/slices/categoriesSlice";
+import { Button } from "@mui/material";
 
 const Navbar = () => {
   const categories = useSelector((state) => state.categories.categories);

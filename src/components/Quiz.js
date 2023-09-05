@@ -6,6 +6,7 @@ import {
   clearSelectedAnswer,
 } from "../redux/slices/quizSlice";
 import { ActiveQuestion } from "../components/ActiveQuestion";
+import { Button } from "@mui/material";
 
 const Quiz = () => {
   const selectedCategory = useSelector(
@@ -50,9 +51,13 @@ const Quiz = () => {
       <div className="quiz-body">
         <div className="start-quiz">
           <h3>Click the button below to generate a quiz.</h3>
-          <button className="quiz-btn" onClick={handleStartClick}>
+          <Button
+            variant="contained"
+            className="quiz-btn"
+            onClick={handleStartClick}
+          >
             Start a new quiz
-          </button>
+          </Button>
         </div>
         <div className="loading-container">
           {isLoading ? <p>Loading...</p> : <span></span>}
@@ -67,22 +72,35 @@ const Quiz = () => {
           )}
         </div>
         <div className="controls">
-          {questions.length>0 && <div className="controls-progress">
-            <span>question {activeQuestionKey+1}/{questions.length}</span>
-          </div>}
+          {questions.length > 0 && (
+            <div className="controls-progress">
+              <span>
+                question {activeQuestionKey + 1}/{questions.length}
+              </span>
+            </div>
+          )}
           <div className="controls-btns">
-            <button
+            <Button
+              variant="contained"
               onClick={handleBackClick}
               disabled={isFirstQuestion || !questions.length}
             >
               Back
-            </button>
-            <button onClick={handleClear} disabled={!isAnswerSelected}>
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleClear}
+              disabled={!isAnswerSelected}
+            >
               Clear current answer
-            </button>
-            <button onClick={handleNextClick} disabled={!isAnswerCorrect}>
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleNextClick}
+              disabled={!isAnswerCorrect}
+            >
               Next
-            </button>
+            </Button>
           </div>
         </div>
       </div>

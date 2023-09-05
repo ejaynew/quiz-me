@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decodeHtmlEntities } from "../util/htmlEntities";
 import { shuffle } from "../util/shuffle";
 import { selectAnswer } from "../redux/slices/quizSlice";
+import { Button } from "@mui/material";
+import { setPossibleAnswers } from "../redux/slices/quizSlice";
 
 export const ActiveQuestion = () => {
   const dispatch = useDispatch();
@@ -14,7 +16,13 @@ export const ActiveQuestion = () => {
   const questions = useSelector((state) => state.quiz.questions);
   const activeQuestion = questions[activeQuestionKey];
   const { incorrect_answers, correct_answer } = activeQuestion;
-  const possibleAnswers = shuffle([...incorrect_answers, correct_answer]);
+  const possibleAnswers = useSelector((state) => state.quiz.possibleAnswers);
+
+  useEffect(() => {
+    dispatch(
+      setPossibleAnswers(shuffle([...incorrect_answers, correct_answer]))
+    );
+  }, [activeQuestionKey]);
 
   const handleAnswerClick = (e) => {
     const isCorrect = e.target.value === correct_answer;
@@ -35,24 +43,33 @@ export const ActiveQuestion = () => {
       <div className="question-answers">
         {possibleAnswers.map((option, index) => (
           <div>
-            <button key={index} onClick={handleAnswerClick} value={option}>{`${
-              index + 1
-            }. ${decodeHtmlEntities(option)}`}</button>
+            <Button
+              variant="contained"
+              key={index}
+              onClick={handleAnswerClick}
+              value={option}
+            >{`${index + 1}. ${decodeHtmlEntities(option)}`}</Button>
           </div>
         ))}
         {isAnswerCorrect && (
           <p class="correct-message">
             👏 That's right! The correct answer is{" "}
-            <span class="correct-answer">{decodeHtmlEntities(selectedAnswer)}</span>.
+            <span class="correct-answer">
+              {decodeHtmlEntities(selectedAnswer)}
+            </span>
+            . 👏
           </p>
         )}
-        {isAnswerCorrect===false && (
+        {isAnswerCorrect === false && (
           <p class="incorrect-message">
-            You selected <span class="incorrect-answer">{decodeHtmlEntities(selectedAnswer)}</span>, which is incorrect. Please try again.
+            ❌ You selected{" "}
+            <span class="incorrect-answer">
+              {decodeHtmlEntities(selectedAnswer)}
+            </span>
+            , which is incorrect. Please try again. ❌
           </p>
         )}
       </div>
-      {console.log(activeQuestion)}
     </div>
   );
 };

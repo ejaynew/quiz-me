@@ -11,6 +11,7 @@ const quizSlice = createSlice({
     error: null,
     selectedAnswer: null,
     isAnswerCorrect: null,
+    possibleAnswers: [],
     amount: 10,
     isDarkMode: false,
   },
@@ -45,6 +46,9 @@ const quizSlice = createSlice({
     setDarkMode: (state, action) => {
       state.isDarkMode = action.payload;
     },
+    setPossibleAnswers: (state, action) => {
+      state.possibleAnswers = action.payload;
+    },
   },
 });
 
@@ -57,6 +61,7 @@ export const {
   selectAnswer,
   clearSelectedAnswer,
   setDarkMode,
+  setPossibleAnswers,
 } = quizSlice.actions;
 
 export const fetchNewQuestions = (category, amount) => async (dispatch) => {
