@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decodeHtmlEntities } from "../util/htmlEntities";
 import { shuffle } from "../util/shuffle";
-import { selectAnswer } from "../redux/slices/quizSlice";
+import { selectAnswer, setPossibleAnswers } from "../redux/slices/quizSlice";
 import { Button } from "@mui/material";
-import { setPossibleAnswers } from "../redux/slices/quizSlice";
 
 export const ActiveQuestion = () => {
   const dispatch = useDispatch();

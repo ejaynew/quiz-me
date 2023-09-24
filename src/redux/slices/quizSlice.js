@@ -49,6 +49,9 @@ const quizSlice = createSlice({
     setPossibleAnswers: (state, action) => {
       state.possibleAnswers = action.payload;
     },
+    clearQuiz: (state) => {
+      state.questions = [];
+    },
   },
 });
 
@@ -62,6 +65,7 @@ export const {
   clearSelectedAnswer,
   setDarkMode,
   setPossibleAnswers,
+  clearQuiz,
 } = quizSlice.actions;
 
 export const fetchNewQuestions = (category, amount) => async (dispatch) => {

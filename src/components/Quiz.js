@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react"; // Step 1
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchNewQuestions,
   setActiveQuestion,
   clearSelectedAnswer,
+  clearQuiz,
 } from "../redux/slices/quizSlice";
 import { ActiveQuestion } from "../components/ActiveQuestion";
 import { Button } from "@mui/material";
@@ -19,6 +20,7 @@ const Quiz = () => {
     (state) => state.quiz.activeQuestionKey
   );
   const isFirstQuestion = activeQuestionKey === 0;
+  const isLastQuestion = activeQuestionKey === 9;
   const isAnswerSelected = useSelector((state) => state.quiz.selectedAnswer);
   const isAnswerCorrect = useSelector((state) => state.quiz.isAnswerCorrect);
 
@@ -26,6 +28,8 @@ const Quiz = () => {
   const handleStartClick = () => {
     dispatch(clearSelectedAnswer());
     dispatch(fetchNewQuestions(selectedCategory));
+    setShowStartMessage(false); // Step 4
+    setShowCompletionMessage(false);
   };
   const handleBackClick = () => {
     dispatch(clearSelectedAnswer());
@@ -39,9 +43,46 @@ const Quiz = () => {
   };
   const handleClear = () => {
     dispatch(clearSelectedAnswer());
+    setShowStartMessage(false); // Step 4
   };
+  const handleFinishClick = () => {
+    dispatch(clearQuiz());
+    setShowCompletionMessage(true);
+  };
+
+  const [showStartMessage, setShowStartMessage] = useState(true); // Step 2
+  const [showCompletionMessage, setShowCompletionMessage] = useState(false); // Step 2
+
   return (
     <div className="quiz-container">
+      {showStartMessage && ( // Step 3
+        <div className="start-message">
+          <h3>
+            Please select a category and click the button below to start the
+            quiz.
+          </h3>
+          <Button
+            variant="contained"
+            className="quiz-btn"
+            onClick={handleStartClick}
+          >
+            Start a new quiz
+          </Button>
+        </div>
+      )}
+      {showCompletionMessage && ( // Step 3
+        <div className="completion-message">
+          <h3>Congratulations! You have completed the quiz.</h3>
+          <p>Click the button below to start a new quiz.</p>
+          <Button
+            variant="contained"
+            className="quiz-btn"
+            onClick={handleStartClick}
+          >
+            Start a new quiz
+          </Button>
+        </div>
+      )}
       <p>
         Current quiz topic:{" "}
         <span className="topic-label">
@@ -50,14 +91,15 @@ const Quiz = () => {
       </p>
       <div className="quiz-body">
         <div className="start-quiz">
-          <h3>Click the button below to generate a quiz.</h3>
-          <Button
-            variant="contained"
-            className="quiz-btn"
-            onClick={handleStartClick}
-          >
-            Start a new quiz
-          </Button>
+          {isFirstQuestion && (
+            <Button
+              variant="contained"
+              className="quiz-btn"
+              onClick={handleStartClick}
+            >
+              Start a new quiz
+            </Button>
+          )}
         </div>
         <div className="loading-container">
           {isLoading ? <p>Loading...</p> : <span></span>}
@@ -90,17 +132,22 @@ const Quiz = () => {
             <Button
               variant="contained"
               onClick={handleClear}
-              disabled={!isAnswerSelected}
+              disabled={!isAnswerSelected || !questions.length}
             >
               Clear current answer
             </Button>
             <Button
               variant="contained"
               onClick={handleNextClick}
-              disabled={!isAnswerCorrect}
+              disabled={isLastQuestion || !isAnswerCorrect}
             >
               Next
             </Button>
+            {isLastQuestion && isAnswerCorrect && !showCompletionMessage && (
+              <Button variant="contained" onClick={handleFinishClick}>
+                Finish quiz
+              </Button>
+            )}
           </div>
         </div>
       </div>
