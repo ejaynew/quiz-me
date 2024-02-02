@@ -14,6 +14,8 @@ const quizSlice = createSlice({
     possibleAnswers: [],
     amount: 10,
     isDarkMode: false,
+    correctCount: 0,
+    alreadyCounted: [],
   },
   reducers: {
     setCategory: (state, action) => {
@@ -24,13 +26,15 @@ const quizSlice = createSlice({
       state.error = null;
     },
     fetchQuestionsSuccess: (state, action) => {
-      state.loading = false;
       state.questions = action.payload;
       state.activeQuestionKey = 0;
+      state.correctCount = 0;
+      state.alreadyCounted = [];
+      state.loading = false;
     },
     fetchQuestionsFailure: (state, action) => {
-      state.loading = false;
       state.error = action.payload;
+      state.loading = false;
     },
     setActiveQuestion: (state, action) => {
       state.activeQuestionKey = action.payload;
@@ -38,6 +42,10 @@ const quizSlice = createSlice({
     selectAnswer: (state, action) => {
       state.selectedAnswer = action.payload.answer;
       state.isAnswerCorrect = action.payload.isCorrect;
+      if (state.isAnswerCorrect && !(state.activeQuestionKey in state.alreadyCounted)) {
+        state.correctCount++;
+        state.alreadyCounted.push(state.activeQuestionKey);
+      }
     },
     clearSelectedAnswer: (state) => {
       state.selectedAnswer = null;
@@ -68,18 +76,20 @@ export const {
   clearQuiz,
 } = quizSlice.actions;
 
-export const fetchNewQuestions = (category, amount) => async (dispatch) => {
-  if (!category) {
-    dispatch(fetchQuestionsFailure("Please select a category first!"));
-    return;
-  }
-  dispatch(fetchQuestionsPending());
-  try {
-    const questions = await fetchQuestions(category, (amount = 10));
-    dispatch(fetchQuestionsSuccess(questions));
-  } catch (error) {
-    dispatch(fetchQuestionsFailure(error));
-  }
-};
+export const fetchNewQuestions =
+  (category, amount = 10) =>
+  async (dispatch) => {
+    dispatch(fetchQuestionsPending());
+    try {
+      console.log(category);
+      if (!category) {
+        throw new Error("No category selected");
+      }
+      const questions = await fetchQuestions(category, amount);
+      dispatch(fetchQuestionsSuccess(questions));
+    } catch (error) {
+      dispatch(fetchQuestionsFailure(error.message));
+    }
+  };
 
 export default quizSlice.reducer;

@@ -1,23 +1,45 @@
+:root {
+  --main-background: #f28500;
+  --dark-background: #222;
+  --main-text-color: #fff;
+  --secondary-text-color: black;
+  --link-color: #61dafb;
+  --footer-background: #ffefd5;
+  --sidebar-background: #ffd28a;
+  --button-background: #ffefd5;
+  --button-border-color: orange;
+  --selected-btn-background: dodgerblue;
+  --selected-btn-text-color: white;
+  --quiz-btn-background: mediumseagreen;
+  --quiz-error-text-color: #333;
+  --controls-background: papayawhip;
+  --question-background: #333;
+  --question-text-color: #fff;
+  --correct-answer-color: dodgerblue;
+  --incorrect-answer-color: peru;
+}
+
 .App {
   text-align: center;
   overflow-x: hidden;
 }
 
 body.dark-mode {
-  background-color: #222;
-  color: #fff;
+  background-color: var(--dark-background);
+  color: var(--main-text-color);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--link-color);
 }
+
 .header-container {
-  background-color: papayawhip;
-  color: peru;
   display: flex;
-  justify-content: space-between; /* Space items horizontally */
-  align-items: center; /* Center items vertically */
-  padding: 10px; /* Add some padding for spacing */
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--main-background);
+  color: var(--main-text-color);
+  padding: 10px;
 }
 
 .title-container {
@@ -37,20 +59,23 @@ body.dark-mode {
 
 .dark-mode-btn-container {
   display: flex;
-  align-items: center; /* Center items vertically within the dark mode container */
-  justify-content: left;
+  align-items: center;
   min-width: 10%;
   padding-right: 20px;
 }
 
-/* Style the label and input for the dark mode toggle */
 .dark-mode-label {
-  margin-right: 8px; /* Add some space between label and input */
+  margin-right: 8px;
 }
 
 .footer {
-  background-color: papayawhip;
-  color: black;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 30px;
+  background-color: var(--footer-background);
+  color: var(--secondary-text-color);
   padding: 5px;
 }
 
@@ -71,11 +96,11 @@ body.dark-mode {
   display: table-cell;
   position: relative;
   width: 25vw;
-  background-color: #ffd28a;
+  background-color: var(--sidebar-background);
 }
 
 .sidebar-menu {
-  max-height: 70vh;
+  max-height: calc(100vh - (215px));
   overflow-y: auto;
   overflow-x: hidden;
   padding-bottom: 10px;
@@ -83,7 +108,7 @@ body.dark-mode {
 
 .sidebar-title {
   text-align: center;
-  color: black;
+  color: var(--secondary-text-color);
 }
 
 .topic-label {
@@ -93,8 +118,8 @@ body.dark-mode {
 
 .nav-btn {
   padding: 8px;
-  background-color: papayawhip;
-  border: 1px solid orange;
+  background-color: var(--button-background);
+  border: 1px solid var(--button-border-color);
   margin: 1px 5px 1px 5px;
   width: 80%;
   border-radius: 8px;
@@ -105,8 +130,8 @@ body.dark-mode {
 }
 
 .nav-btn.selected {
-  background-color: dodgerblue;
-  color: white;
+  background-color: var(--selected-btn-background);
+  color: var(--selected-btn-text-color);
   font-weight: bold;
 }
 
@@ -115,8 +140,8 @@ body.dark-mode {
   border: 1px solid pink;
   margin: 1px 5px 1px 5px;
   width: 30%;
-  background-color: mediumseagreen;
-  color: white;
+  background-color: var(--quiz-btn-background);
+  color: var(--main-text-color);
   font-weight: bold;
   border-radius: 8px;
 }
@@ -127,25 +152,31 @@ body.dark-mode {
 
 .quiz-error {
   text-align: center;
+  color: var(--quiz-error-text-color);
 }
 
 .questions-container {
-  text-align: left;
-  padding: 20px;
+  padding: 10px;
+  max-width: auto;
 }
 
 .question {
   padding: 5px;
 }
 
+.question.dark-mode {
+  background-color: var(--question-background);
+  color: var(--question-text-color);
+}
+
 .controls {
   padding: 20px;
   border-radius: 8px;
-  background: papayawhip;
+  background: var(--controls-background);
   width: 60%;
   margin-left: auto;
   margin-right: auto;
-  color: black;
+  color: var(--secondary-text-color);
 }
 
 .correct-message,
@@ -154,11 +185,11 @@ body.dark-mode {
 }
 
 .correct-answer {
-  color: dodgerblue;
+  color: var(--correct-answer-color);
   font-weight: bold;
 }
 
 .incorrect-answer {
-  color: peru;
+  color: var(--incorrect-answer-color);
   font-weight: bold;
 }

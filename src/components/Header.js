@@ -11,11 +11,11 @@ const Header = () => {
   };
   return (
     <div className="header-container">
-      <div class="title-container">
+      <div className="title-container">
         <h1 className="header">Quiz me!</h1>
         <p className="subheader">the app that quizzes</p>
       </div>
-      <div class="dark-mode-btn-container">
+      <div className="dark-mode-btn-container">
       <FormControlLabel control={<Switch/>} label="Dark mode" onClick={handleDarkmodeClick} />
         {/* // <label for="dark-mode">dark mode: </label>
         // <input */}

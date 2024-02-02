@@ -2,11 +2,16 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decodeHtmlEntities } from "../util/htmlEntities";
 import { shuffle } from "../util/shuffle";
-import { selectAnswer, setPossibleAnswers } from "../redux/slices/quizSlice";
-import { Button } from "@mui/material";
+import {
+  selectAnswer,
+  setPossibleAnswers,
+  setActiveQuestion,
+} from "../redux/slices/quizSlice";
+import { Button, Typography, Paper } from "@mui/material";
 
 export const ActiveQuestion = () => {
   const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.quiz.isDarkMode);
   const selectedAnswer = useSelector((state) => state.quiz.selectedAnswer);
   const isAnswerCorrect = useSelector((state) => state.quiz.isAnswerCorrect);
   const activeQuestionKey = useSelector(
@@ -29,46 +34,52 @@ export const ActiveQuestion = () => {
   };
 
   return (
-    <div className="question">
+    <Paper elevation={3} className={`question ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="question-info">
-        <h5 className="question-info-category">
-          Category: {activeQuestion.category}
-        </h5>
-        <h5>Difficulty level: {activeQuestion.difficulty}</h5>
+        <Typography variant="h6" className="question-info-category">
+          Category: {decodeHtmlEntities(activeQuestion.category)}
+        </Typography>
+        <Typography variant="subtitle1">
+          Difficulty level: {activeQuestion.difficulty}
+        </Typography>
       </div>
       <div className="question-question">
-        <p>{decodeHtmlEntities(activeQuestion.question)}</p>
+        <Typography variant="h5" align="center">
+          {decodeHtmlEntities(activeQuestion.question)}
+        </Typography>
       </div>
       <div className="question-answers">
         {possibleAnswers.map((option, index) => (
-          <div>
+          <div key={index}>
             <Button
               variant="contained"
-              key={index}
               onClick={handleAnswerClick}
               value={option}
-            >{`${index + 1}. ${decodeHtmlEntities(option)}`}</Button>
+              sx={{ margin: "5px" }}
+            >
+              {`${decodeHtmlEntities(option)}`}
+            </Button>
           </div>
         ))}
         {isAnswerCorrect && (
-          <p class="correct-message">
+          <Typography variant="body1" className="correct-message">
             👏 That's right! The correct answer is{" "}
-            <span class="correct-answer">
+            <span className="correct-answer">
               {decodeHtmlEntities(selectedAnswer)}
             </span>
             . 👏
-          </p>
+          </Typography>
         )}
         {isAnswerCorrect === false && (
-          <p class="incorrect-message">
+          <Typography variant="body1" className="incorrect-message">
             ❌ You selected{" "}
-            <span class="incorrect-answer">
+            <span className="incorrect-answer">
               {decodeHtmlEntities(selectedAnswer)}
             </span>
             , which is incorrect. Please try again. ❌
-          </p>
+          </Typography>
         )}
       </div>
-    </div>
+    </Paper>
   );
 };
